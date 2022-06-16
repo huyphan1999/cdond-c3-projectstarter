@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   build-frontend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: $NODE_DOCKER
     steps:
       - checkout
       - restore_cache:
@@ -20,7 +20,7 @@ jobs:
 
   build-backend:
     docker:
-      - image: circleci/node:13.8.0
+      - image: $NODE_DOCKER
     steps:
       - checkout
       - restore_cache:
@@ -39,12 +39,11 @@ jobs:
       - image: $NODE_DOCKER
       # Docker image here
     steps:
-      - restore_cache:
-          keys: [frontend-build]
       - run:
           name: Frontend test
           command: |
             cd frontend
+            npm i
             npm run test
 
   test-backend:
@@ -58,6 +57,7 @@ jobs:
           name: Backend test
           command: |
             cd backend
+            npm i
             npm run test
 
 workflows:
