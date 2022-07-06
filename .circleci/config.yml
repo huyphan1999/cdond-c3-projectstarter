@@ -416,4 +416,4 @@ workflows:
       - update-cloudfront-distribution:
           requires: [smoke-test]
       - cleanup:
-          requires: [cloudfront-update]
+          requires: [update-cloudfront-distribution]
