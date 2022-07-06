@@ -21,7 +21,6 @@ commands:
           command: |
             curl -V
             SUCCESS=$(curl --insecure  https://kvdb.io/V2NCfi3H6iSdnHQPzSsDov/migration_${CIRCLE_WORKFLOW_ID:0:7})
-            echo ${SUCCESS}
             # Curl command here to see if there was a successful migration associated with the workflow id, store result in SUCCESS variable
             if [ ${SUCCESS} = "success" ];
             then
