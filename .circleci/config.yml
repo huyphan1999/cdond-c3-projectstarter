@@ -318,8 +318,6 @@ jobs:
             else
               exit 1
             fi
-      - destroy-environment
-      - revert-migrations
   update-cloudfront-distribution:
     docker:
       - image: amazon/aws-cli
