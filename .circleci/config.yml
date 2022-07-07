@@ -351,7 +351,6 @@ jobs:
             - OldWorkflowID.txt
       - destroy-environment
       - revert-migrations
-      
   cleanup:
     docker:
       - image: amazon/aws-cli
@@ -373,14 +372,13 @@ jobs:
             echo THIS IS THE OldWorkflowID: "${OldWorkflowID}"
             if [[ "${CIRCLE_WORKFLOW_ID:0:7}" =~ "${OldWorkflowID}" ]]
             then
-              echo '----NOTHING CHANGE-----'
+              echo '----NO CHANGES-----'
             else
               aws s3 rb s3://udapeople-${OldWorkflowID} --force
               aws cloudformation delete-stack --stack-name udapeople-backend-${OldWorkflowID}
               aws cloudformation delete-stack --stack-name udapeople-frontend-${OldWorkflowID}
-              echo '----DELETED-----'
+              echo '----DELETED CONFIRM-----'
             fi
-      # Here's where you will add some code to rollback on failure
       - destroy-environment
       - revert-migrations
 
@@ -414,3 +412,5 @@ workflows:
           requires: [deploy-backend, deploy-frontend]
       - update-cloudfront-distribution:
           requires: [smoke-test]
+      - cleanup:
+          requires: [update-cloudfront-distribution]
